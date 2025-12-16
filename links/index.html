@@ -3,21 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>공지사항 | 재단법인 서담(書潭)장학연구재단</title>
+  <title>관련정부기관 | 재단법인 서담(書潭)장학연구재단</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --ink:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-
-      --brand:#166534;
-      --brand-soft:#ecfdf5;
-      --brand-soft-2:#d1fae5;
-
+      --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+      --brand:#166534; --brand-soft:#ecfdf5; --brand-soft-2:#d1fae5;
       --navy:#0b3a67;
     }
     body{ font-family:"Noto Sans KR",sans-serif; color:var(--ink); }
@@ -171,13 +165,11 @@
 
     /* ===== 햄버거 전체메뉴 오버레이 ===== */
     .menu-overlay{
-      position:fixed;
-      inset:0;
+      position:fixed; inset:0;
       background: rgba(17,24,39,.55);
       backdrop-filter: blur(2px);
       z-index: 9997;
-      display:none;
-      opacity:0;
+      display:none; opacity:0;
       transition: opacity .18s ease;
     }
     .menu-overlay.open{ display:block; opacity:1; }
@@ -209,9 +201,7 @@
     }
     .menu-body{ padding:14px 16px; }
     .menu-item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       text-decoration:none;
       color:var(--ink);
       font-weight:900;
@@ -224,10 +214,28 @@
       border-color:var(--brand-soft-2);
       color:var(--brand);
     }
-    .menu-group-title{
+    .menu-group-title{ font-weight:900; margin:14px 0 8px; color:#111827; }
+
+    /* 기관 링크 리스트 */
+    .org-row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+      text-decoration:none;
+      color:var(--ink);
+    }
+    .org-row:last-child{ border-bottom:0; }
+    .org-row:hover{ color:var(--brand); }
+    .tag{
+      background:var(--brand-soft);
+      border:1px solid var(--brand-soft-2);
+      color:var(--brand);
       font-weight:900;
-      margin: 14px 0 8px;
-      color:#111827;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.8rem;
+      white-space:nowrap;
     }
   </style>
 </head>
@@ -267,20 +275,20 @@
   <!-- 헤더 -->
   <header class="page-hero py-4">
     <div class="container">
-      <div class="hero-title h3 mb-1">알림마당</div>
-      <div class="muted">서브메뉴에서 항목을 선택하면 해당 페이지로 이동합니다.</div>
+      <div class="hero-title h3 mb-1">관련정부기관</div>
+      <div class="muted">감독기관 및 관련 사이트를 안내합니다.</div>
     </div>
   </header>
 
-  <!-- 서브메뉴(페이지형: 탭처럼 보이되 링크로 이동) -->
+  <!-- 서브메뉴(페이지형) -->
   <div id="subnav" class="subnav position-relative">
     <div class="container">
       <ul class="nav nav-pills gap-2 py-2 flex-wrap">
-        <li class="nav-item"><a class="nav-link active" href="../notice/index.html">공지사항</a></li>
+        <li class="nav-item"><a class="nav-link" href="../notice/index.html">공지사항</a></li>
         <li class="nav-item"><a class="nav-link" href="../report/index.html">회계감사보고서</a></li>
         <li class="nav-item"><a class="nav-link" href="../donation/index.html">모금액 및 활용실적</a></li>
         <li class="nav-item"><a class="nav-link" href="../library/index.html">자료실</a></li>
-        <li class="nav-item"><a class="nav-link" href="../links/index.html">관련정부기관</a></li>
+        <li class="nav-item"><a class="nav-link active" href="../links/index.html">관련정부기관</a></li>
       </ul>
     </div>
   </div>
@@ -288,49 +296,69 @@
   <!-- 본문 -->
   <main class="container content-wrap">
     <div class="row g-4">
-      <!-- 왼쪽: 활동 사진 -->
+      <!-- 왼쪽: 안내 카드 -->
       <div class="col-lg-4">
         <div class="card-soft p-4 h-100">
-          <div class="photo-hero mb-3">SCHOLARSHIP<br>PROGRAM</div>
+          <div class="photo-hero mb-3">GOVERNMENT<br>LINKS</div>
 
-          <div class="fw-bold mb-1">활동 사진</div>
-          <div class="muted small mb-3">이미지 업로드 후 자동 삽입</div>
+          <div class="fw-bold mb-1">바로가기</div>
+          <div class="muted small mb-3">오른쪽 목록을 클릭하면 새 창으로 열립니다.</div>
 
           <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-round btn-navy" type="button">사진 업로드</button>
-            <button class="btn btn-round btn-outline" type="button">URL로 추가</button>
+            <button class="btn btn-round btn-navy" type="button" onclick="window.open('https://www.sen.go.kr','_blank','noopener');">서울시교육청</button>
+            <button class="btn btn-round btn-outline" type="button" onclick="window.open('https://www.nts.go.kr','_blank','noopener');">국세청</button>
           </div>
 
           <div class="muted small">
-            * 업로드/URL 기능은 추후 실제 업로드 로직(서버/스토리지)에 연결하면 됩니다.
+            * 상단 🔗 아이콘에서도 동일한 링크를 바로 열 수 있습니다.
           </div>
         </div>
       </div>
 
-      <!-- 오른쪽: 공지사항 내용 -->
+      <!-- 오른쪽: 기관 목록 -->
       <div class="col-lg-8">
         <div class="card-soft p-4">
-          <div class="section-title">공지사항</div>
-          <p class="muted mb-4">공지 목록이 들어갈 영역입니다. (샘플)</p>
+          <div class="section-title">관련정부기관</div>
+          <p class="muted mb-4">감독기관 링크는 반드시 연결되어 있어야 합니다.</p>
 
           <div class="border-top pt-3">
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <div class="fw-bold">[샘플] 장학사업 안내</div>
-              <div class="muted small">2025-01-01</div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <div class="fw-bold">[샘플] 연구지원 공고</div>
-              <div class="muted small">2025-01-01</div>
-            </div>
+            <!-- ✅ 필수 1 -->
+            <a class="org-row" href="https://www.sen.go.kr" target="_blank" rel="noreferrer noopener">
+              <div>
+                <div class="fw-bold">서울시교육청</div>
+                <div class="muted small">감독기관</div>
+              </div>
+              <span class="tag">필수</span>
+            </a>
+
+            <!-- ✅ 필수 2 -->
+            <a class="org-row" href="https://www.nts.go.kr" target="_blank" rel="noreferrer noopener">
+              <div>
+                <div class="fw-bold">국세청</div>
+                <div class="muted small">감독기관</div>
+              </div>
+              <span class="tag">필수</span>
+            </a>
+
+            <!-- (옵션) 추가 기관 예시 -->
+            <a class="org-row" href="https://www.law.go.kr" target="_blank" rel="noreferrer noopener">
+              <div>
+                <div class="fw-bold">국가법령정보센터</div>
+                <div class="muted small">관련 법령 조회</div>
+              </div>
+              <span class="tag">참고</span>
+            </a>
           </div>
 
-          <div class="muted small mt-3">* 상세 페이지/게시판 기능은 다음 단계에서 연결하면 됩니다.</div>
+          <div class="muted small mt-3">
+            * 기관 추가는 위 목록을 복사해서 링크/명칭만 바꾸면 됩니다.
+          </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- 🔗 링크 패널 -->
+  <!-- 🔗 링크 패널(상단 아이콘) -->
   <div id="linkPanel" class="link-panel" aria-hidden="true">
     <div class="link-head">
       <div class="fw-bold">관련정부기관</div>
@@ -342,18 +370,12 @@
     </div>
 
     <a class="link-item" href="https://www.sen.go.kr" target="_blank" rel="noreferrer">
-      <div>
-        <div class="fw-bold">서울시교육청</div>
-        <small>감독기관</small>
-      </div>
+      <div><div class="fw-bold">서울시교육청</div><small>감독기관</small></div>
       <div class="muted">↗</div>
     </a>
 
     <a class="link-item" href="https://www.nts.go.kr" target="_blank" rel="noreferrer">
-      <div>
-        <div class="fw-bold">국세청</div>
-        <small>감독기관</small>
-      </div>
+      <div><div class="fw-bold">국세청</div><small>감독기관</small></div>
       <div class="muted">↗</div>
     </a>
   </div>
@@ -434,9 +456,7 @@
       menuDrawer.classList.add("open");
       menuOverlay.setAttribute("aria-hidden","false");
       menuDrawer.setAttribute("aria-hidden","false");
-      // 링크 패널 열려있으면 닫기
       if(linkPanel.classList.contains("open")) closeLinks();
-      // 스크롤 잠금
       document.body.style.overflow = "hidden";
     }
     function closeMenu(){
@@ -444,9 +464,7 @@
       menuDrawer.classList.remove("open");
       menuOverlay.setAttribute("aria-hidden","true");
       menuDrawer.setAttribute("aria-hidden","true");
-      // 스크롤 잠금 해제
       document.body.style.overflow = "";
-      // overlay display는 CSS가 처리
     }
 
     menuBtn?.addEventListener("click", openMenu);

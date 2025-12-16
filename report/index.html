@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>회계감사보고서 | 재단법인 서담(書潭)장학연구재단</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--brand:#166534;--brand-soft:#ecfdf5;--brand-soft-2:#d1fae5;--navy:#0b3a67;}
+    body{font-family:"Noto Sans KR",sans-serif;color:var(--ink);} .muted{color:var(--muted);}
+    .page-hero{background:#f8fafc;border-bottom:1px solid var(--line);} .hero-title{font-weight:800;letter-spacing:-.02em;}
+    .top-actions{display:flex;align-items:center;gap:6px;}
+    .top-actions .top-link{display:inline-flex;align-items:center;padding:10px 10px;border-radius:12px;text-decoration:none;color:var(--ink);font-weight:800;}
+    .top-actions .top-link:hover{background:#f3f4f6;}
+    .iconbtn{width:64px;height:64px;display:inline-flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;border:0;border-radius:0;}
+    .iconbtn:hover{opacity:.95;} .iconbtn svg{width:26px;height:26px;}
+    .subnav{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;opacity:0;transform:translateY(-14px);filter:blur(6px);pointer-events:none;}
+    .subnav.is-in{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto;transition:opacity .22s ease,transform .34s cubic-bezier(.16,1,.3,1),filter .26s ease;}
+    .subnav.is-in::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(22,101,52,0),rgba(22,101,52,.35),rgba(22,101,52,0));animation:flashLine .7s ease both;pointer-events:none;}
+    @keyframes flashLine{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+    .subnav .nav-link{color:var(--ink);font-weight:800;padding:12px 14px;border-radius:999px;border:1px solid transparent;transition:all .18s ease;}
+    .subnav .nav-link:hover{background:#f0fdf4;border-color:#dcfce7;color:#14532d;}
+    .subnav .nav-link.active{background:var(--brand-soft);border-color:var(--brand-soft-2);color:var(--brand);box-shadow:0 10px 26px rgba(16,185,129,.10);}
+    .content-wrap{padding:28px 0 44px;} .card-soft{border:1px solid var(--line);border-radius:18px;background:#fff;}
+    .photo-hero{font-size:2.6rem;font-weight:900;letter-spacing:.18em;color:#e5e7eb;line-height:1.05;user-select:none;}
+    .btn-round{border-radius:12px;padding:10px 14px;font-weight:800;}
+    .btn-navy{background:var(--navy);border:1px solid var(--navy);color:#fff;} .btn-navy:hover{opacity:.95;color:#fff;}
+    .btn-outline{border:1px solid var(--line);background:#fff;color:var(--ink);} .btn-outline:hover{background:#f9fafb;}
+    .section-title{font-weight:900;font-size:1.35rem;margin-bottom:14px;}
+    .link-panel{position:fixed;top:72px;right:18px;width:min(360px,92vw);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 60px rgba(0,0,0,.12);padding:14px;z-index:9998;display:none;opacity:0;transform:translateY(-10px);filter:blur(6px);}
+    .link-panel.open{display:block;opacity:1;transform:translateY(0);filter:blur(0);transition:opacity .18s ease,transform .28s cubic-bezier(.16,1,.3,1),filter .22s ease;}
+    .link-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 10px;border-radius:12px;text-decoration:none;color:var(--ink);border:1px solid transparent;}
+    .link-item:hover{background:var(--brand-soft);border-color:var(--brand-soft-2);color:var(--brand);}
+    .link-item small{color:var(--muted);font-weight:700;}
+    .link-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+    .xmini{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;}
+    .xmini:hover{background:#f9fafb;}
+    .menu-overlay{position:fixed;inset:0;background:rgba(17,24,39,.55);backdrop-filter:blur(2px);z-index:9997;display:none;opacity:0;transition:opacity .18s ease;}
+    .menu-overlay.open{display:block;opacity:1;}
+    .menu-drawer{position:fixed;top:0;right:0;width:min(420px,92vw);height:100vh;background:#fff;border-left:1px solid var(--line);z-index:9999;transform:translateX(14px);opacity:0;filter:blur(6px);pointer-events:none;transition:transform .28s cubic-bezier(.16,1,.3,1),opacity .18s ease,filter .22s ease;}
+    .menu-drawer.open{transform:translateX(0);opacity:1;filter:blur(0);pointer-events:auto;}
+    .menu-head{display:flex;align-items:center;justify-content:space-between;padding:16px 16px;border-bottom:1px solid var(--line);}
+    .menu-body{padding:14px 16px;}
+    .menu-item{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--ink);font-weight:900;padding:14px 12px;border-radius:14px;border:1px solid transparent;}
+    .menu-item:hover{background:var(--brand-soft);border-color:var(--brand-soft-2);color:var(--brand);}
+    .menu-group-title{font-weight:900;margin:14px 0 8px;color:#111827;}
+  </style>
+</head>
+<body>
+  <nav class="navbar bg-white border-bottom">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand fw-bold m-0" href="../index.html">재단법인 서담(書潭)장학연구재단</a>
+      <div class="d-flex align-items-center gap-2">
+        <div class="top-actions d-none d-lg-flex">
+          <a class="top-link" href="../company/about.html">재단소개</a>
+          <a class="top-link" href="../notice/index.html">알림마당</a>
+        </div>
+        <button id="linkBtn" class="iconbtn" type="button" aria-label="관련 링크 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.9 2.03" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 11a5 5 0 0 0-7.07 0L4.8 13.12a5 5 0 0 0 7.07 7.07L13.1 21.97" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button id="menuBtn" class="iconbtn" type="button" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero py-4">
+    <div class="container">
+      <div class="hero-title h3 mb-1">알림마당</div>
+      <div class="muted">서브메뉴에서 항목을 선택하면 해당 페이지로 이동합니다.</div>
+    </div>
+  </header>
+
+  <div id="subnav" class="subnav position-relative">
+    <div class="container">
+      <ul class="nav nav-pills gap-2 py-2 flex-wrap">
+        <li class="nav-item"><a class="nav-link" href="../notice/index.html">공지사항</a></li>
+        <li class="nav-item"><a class="nav-link active" href="./index.html">회계감사보고서</a></li>
+        <li class="nav-item"><a class="nav-link" href="../donation/index.html">모금액 및 활용실적</a></li>
+        <li class="nav-item"><a class="nav-link" href="../library/index.html">자료실</a></li>
+        <li class="nav-item"><a class="nav-link" href="../links/index.html">관련정부기관</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main class="container content-wrap">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="card-soft p-4 h-100">
+          <div class="photo-hero mb-3">AUDIT<br>REPORT</div>
+          <div class="fw-bold mb-1">자료 업로드</div>
+          <div class="muted small mb-3">보고서(PDF) 업로드 영역</div>
+          <div class="d-flex gap-2 mb-3">
+            <button class="btn btn-round btn-navy" type="button">파일 업로드</button>
+            <button class="btn btn-round btn-outline" type="button">URL로 추가</button>
+          </div>
+          <div class="muted small">* 업로드 기능은 추후 서버/스토리지 연결 시 활성화됩니다.</div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card-soft p-4">
+          <div class="section-title">회계감사보고서</div>
+          <p class="muted mb-4">감사보고서/결산서류 게시 영역입니다. (샘플)</p>
+
+          <div class="border-top pt-3">
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <div class="fw-bold">2025 회계감사보고서 (PDF)</div>
+              <div class="muted small">2026-03-31</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <div class="fw-bold">2024 회계감사보고서 (PDF)</div>
+              <div class="muted small">2025-03-31</div>
+            </div>
+          </div>
+
+          <div class="muted small mt-3">* 상세 보기(PDF 열기) 링크는 파일 업로드 후 연결하면 됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="linkPanel" class="link-panel" aria-hidden="true">
+    <div class="link-head">
+      <div class="fw-bold">관련정부기관</div>
+      <button id="linkClose" class="xmini" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <a class="link-item" href="https://www.sen.go.kr" target="_blank" rel="noreferrer">
+      <div><div class="fw-bold">서울시교육청</div><small>감독기관</small></div><div class="muted">↗</div>
+    </a>
+    <a class="link-item" href="https://www.nts.go.kr" target="_blank" rel="noreferrer">
+      <div><div class="fw-bold">국세청</div><small>감독기관</small></div><div class="muted">↗</div>
+    </a>
+  </div>
+
+  <div id="menuOverlay" class="menu-overlay" aria-hidden="true"></div>
+  <aside id="menuDrawer" class="menu-drawer" aria-hidden="true">
+    <div class="menu-head">
+      <div class="fw-bold">전체메뉴</div>
+      <button id="menuClose" class="xmini" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="menu-body">
+      <div class="menu-group-title">메인</div>
+      <a class="menu-item" href="../index.html">홈 <span class="muted">↗</span></a>
+      <div class="menu-group-title">재단</div>
+      <a class="menu-item" href="../company/about.html">재단소개 <span class="muted">↗</span></a>
+      <div class="menu-group-title">알림마당</div>
+      <a class="menu-item" href="../notice/index.html">공지사항 <span class="muted">↗</span></a>
+      <a class="menu-item" href="./index.html">회계감사보고서 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../donation/index.html">모금액 및 활용실적 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../library/index.html">자료실 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../links/index.html">관련정부기관 <span class="muted">↗</span></a>
+    </div>
+  </aside>
+
+  <script>
+    const subnav=document.getElementById("subnav");
+    window.addEventListener("DOMContentLoaded",()=>setTimeout(()=>subnav.classList.add("is-in"),90));
+
+    const linkBtn=document.getElementById("linkBtn");
+    const linkPanel=document.getElementById("linkPanel");
+    const linkClose=document.getElementById("linkClose");
+    function openLinks(){linkPanel.style.display="block";requestAnimationFrame(()=>linkPanel.classList.add("open"));linkPanel.setAttribute("aria-hidden","false");}
+    function closeLinks(){linkPanel.classList.remove("open");linkPanel.setAttribute("aria-hidden","true");setTimeout(()=>{if(!linkPanel.classList.contains("open")) linkPanel.style.display="none";},220);}
+    linkBtn?.addEventListener("click",()=>{linkPanel.classList.contains("open")?closeLinks():openLinks();});
+    linkClose?.addEventListener("click",closeLinks);
+    window.addEventListener("click",(e)=>{if(!linkPanel.classList.contains("open")) return; if(e.target.closest("#linkPanel")||e.target.closest("#linkBtn")) return; closeLinks();});
+
+    const menuBtn=document.getElementById("menuBtn");
+    const menuOverlay=document.getElementById("menuOverlay");
+    const menuDrawer=document.getElementById("menuDrawer");
+    const menuClose=document.getElementById("menuClose");
+    function openMenu(){menuOverlay.classList.add("open");menuDrawer.classList.add("open");document.body.style.overflow="hidden"; if(linkPanel.classList.contains("open")) closeLinks();}
+    function closeMenu(){menuOverlay.classList.remove("open");menuDrawer.classList.remove("open");document.body.style.overflow="";}
+    menuBtn?.addEventListener("click",openMenu);
+    menuOverlay?.addEventListener("click",closeMenu);
+    menuClose?.addEventListener("click",closeMenu);
+    window.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ if(menuDrawer.classList.contains("open")) closeMenu(); if(linkPanel.classList.contains("open")) closeLinks(); }});
+  </script>
+</body>
+</html>

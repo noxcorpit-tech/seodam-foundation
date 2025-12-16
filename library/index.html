@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>공지사항 | 재단법인 서담(書潭)장학연구재단</title>
+  <title>자료실 | 재단법인 서담(書潭)장학연구재단</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -13,11 +13,9 @@
       --ink:#1f2937;
       --muted:#6b7280;
       --line:#e5e7eb;
-
       --brand:#166534;
       --brand-soft:#ecfdf5;
       --brand-soft-2:#d1fae5;
-
       --navy:#0b3a67;
     }
     body{ font-family:"Noto Sans KR",sans-serif; color:var(--ink); }
@@ -229,6 +227,30 @@
       margin: 14px 0 8px;
       color:#111827;
     }
+
+    /* list */
+    .file-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid var(--line);
+      text-decoration:none;
+      color:var(--ink);
+    }
+    .file-row:last-child{ border-bottom:0; }
+    .file-row:hover{ color:var(--brand); }
+    .badge-soft{
+      background:var(--brand-soft);
+      border:1px solid var(--brand-soft-2);
+      color:var(--brand);
+      font-weight:900;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.8rem;
+      white-space:nowrap;
+    }
   </style>
 </head>
 
@@ -267,19 +289,19 @@
   <!-- 헤더 -->
   <header class="page-hero py-4">
     <div class="container">
-      <div class="hero-title h3 mb-1">알림마당</div>
+      <div class="hero-title h3 mb-1">자료실</div>
       <div class="muted">서브메뉴에서 항목을 선택하면 해당 페이지로 이동합니다.</div>
     </div>
   </header>
 
-  <!-- 서브메뉴(페이지형: 탭처럼 보이되 링크로 이동) -->
+  <!-- 서브메뉴(페이지형) -->
   <div id="subnav" class="subnav position-relative">
     <div class="container">
       <ul class="nav nav-pills gap-2 py-2 flex-wrap">
-        <li class="nav-item"><a class="nav-link active" href="../notice/index.html">공지사항</a></li>
+        <li class="nav-item"><a class="nav-link" href="../notice/index.html">공지사항</a></li>
         <li class="nav-item"><a class="nav-link" href="../report/index.html">회계감사보고서</a></li>
         <li class="nav-item"><a class="nav-link" href="../donation/index.html">모금액 및 활용실적</a></li>
-        <li class="nav-item"><a class="nav-link" href="../library/index.html">자료실</a></li>
+        <li class="nav-item"><a class="nav-link active" href="../library/index.html">자료실</a></li>
         <li class="nav-item"><a class="nav-link" href="../links/index.html">관련정부기관</a></li>
       </ul>
     </div>
@@ -291,40 +313,57 @@
       <!-- 왼쪽: 활동 사진 -->
       <div class="col-lg-4">
         <div class="card-soft p-4 h-100">
-          <div class="photo-hero mb-3">SCHOLARSHIP<br>PROGRAM</div>
+          <div class="photo-hero mb-3">RESOURCE<br>LIBRARY</div>
 
-          <div class="fw-bold mb-1">활동 사진</div>
-          <div class="muted small mb-3">이미지 업로드 후 자동 삽입</div>
+          <div class="fw-bold mb-1">자료 등록</div>
+          <div class="muted small mb-3">현재는 샘플 UI입니다.</div>
 
           <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-round btn-navy" type="button">사진 업로드</button>
+            <button class="btn btn-round btn-navy" type="button">파일 업로드</button>
             <button class="btn btn-round btn-outline" type="button">URL로 추가</button>
           </div>
 
           <div class="muted small">
-            * 업로드/URL 기능은 추후 실제 업로드 로직(서버/스토리지)에 연결하면 됩니다.
+            * GitHub Pages(무료)는 서버 업로드 저장 기능이 없어서, 실제 업로드는 다음 단계(스토리지/폼)에서 연결합니다.
           </div>
         </div>
       </div>
 
-      <!-- 오른쪽: 공지사항 내용 -->
+      <!-- 오른쪽: 자료실 내용 -->
       <div class="col-lg-8">
         <div class="card-soft p-4">
-          <div class="section-title">공지사항</div>
-          <p class="muted mb-4">공지 목록이 들어갈 영역입니다. (샘플)</p>
+          <div class="section-title">자료실</div>
+          <p class="muted mb-4">다운로드 자료 및 안내문을 올리는 영역입니다. (샘플)</p>
 
           <div class="border-top pt-3">
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <div class="fw-bold">[샘플] 장학사업 안내</div>
-              <div class="muted small">2025-01-01</div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <div class="fw-bold">[샘플] 연구지원 공고</div>
-              <div class="muted small">2025-01-01</div>
-            </div>
+            <a class="file-row" href="#" onclick="alert('샘플입니다. 파일 링크를 연결하세요.'); return false;">
+              <div>
+                <div class="fw-bold">장학생 지원서(양식)</div>
+                <div class="muted small">파일(PDF/HWP) 링크를 연결할 수 있습니다.</div>
+              </div>
+              <span class="badge-soft">다운로드</span>
+            </a>
+
+            <a class="file-row" href="#" onclick="alert('샘플입니다. 파일 링크를 연결하세요.'); return false;">
+              <div>
+                <div class="fw-bold">개인정보 수집·이용 동의서</div>
+                <div class="muted small">파일(PDF/HWP) 링크를 연결할 수 있습니다.</div>
+              </div>
+              <span class="badge-soft">다운로드</span>
+            </a>
+
+            <a class="file-row" href="#" onclick="alert('샘플입니다. 파일 링크를 연결하세요.'); return false;">
+              <div>
+                <div class="fw-bold">장학금 지급 안내문</div>
+                <div class="muted small">파일(PDF/HWP) 링크를 연결할 수 있습니다.</div>
+              </div>
+              <span class="badge-soft">다운로드</span>
+            </a>
           </div>
 
-          <div class="muted small mt-3">* 상세 페이지/게시판 기능은 다음 단계에서 연결하면 됩니다.</div>
+          <div class="muted small mt-3">
+            * 실제 파일을 배포하려면: (1) 저장소에 파일 업로드 후 링크 연결 또는 (2) 구글드라이브/클라우드 링크 연결을 추천합니다.
+          </div>
         </div>
       </div>
     </div>
@@ -342,18 +381,12 @@
     </div>
 
     <a class="link-item" href="https://www.sen.go.kr" target="_blank" rel="noreferrer">
-      <div>
-        <div class="fw-bold">서울시교육청</div>
-        <small>감독기관</small>
-      </div>
+      <div><div class="fw-bold">서울시교육청</div><small>감독기관</small></div>
       <div class="muted">↗</div>
     </a>
 
     <a class="link-item" href="https://www.nts.go.kr" target="_blank" rel="noreferrer">
-      <div>
-        <div class="fw-bold">국세청</div>
-        <small>감독기관</small>
-      </div>
+      <div><div class="fw-bold">국세청</div><small>감독기관</small></div>
       <div class="muted">↗</div>
     </a>
   </div>
@@ -434,9 +467,7 @@
       menuDrawer.classList.add("open");
       menuOverlay.setAttribute("aria-hidden","false");
       menuDrawer.setAttribute("aria-hidden","false");
-      // 링크 패널 열려있으면 닫기
       if(linkPanel.classList.contains("open")) closeLinks();
-      // 스크롤 잠금
       document.body.style.overflow = "hidden";
     }
     function closeMenu(){
@@ -444,9 +475,7 @@
       menuDrawer.classList.remove("open");
       menuOverlay.setAttribute("aria-hidden","true");
       menuDrawer.setAttribute("aria-hidden","true");
-      // 스크롤 잠금 해제
       document.body.style.overflow = "";
-      // overlay display는 CSS가 처리
     }
 
     menuBtn?.addEventListener("click", openMenu);
