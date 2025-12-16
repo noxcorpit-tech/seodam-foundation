@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>알림마당 | 재단법인 서담(書潭)장학연구재단</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+
+      /* ✅ about 페이지와 동일 톤 */
+      --brand:#166534;
+      --brand-soft:#ecfdf5;
+      --brand-soft-2:#d1fae5;
+
+      /* 상단 버튼 네이비 */
+      --navy:#0b3a67;
+    }
+
+    body { font-family:"Noto Sans KR", sans-serif; color:var(--ink); }
+    .muted { color:var(--muted); }
+    .page-hero { background:#f8fafc; border-bottom:1px solid var(--line); }
+    .hero-title { font-weight:800; letter-spacing:-.02em; }
+
+    /* ===== 상단(메인) 네비: about와 동일 ===== */
+    .top-actions { display:flex; align-items:center; gap:6px; }
+    .top-actions .top-link{
+      display:inline-flex; align-items:center;
+      padding:10px 10px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--ink);
+      font-weight:800;
+    }
+    .top-actions .top-link:hover{ background:#f3f4f6; }
+
+    /* 네이비 정사각 버튼(햄버거/링크) */
+    .iconbtn{
+      width:64px; height:64px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:var(--navy); color:#fff;
+      border:0; border-radius:0;
+    }
+    .iconbtn:hover{ opacity:.95; }
+    .iconbtn svg{ width:26px; height:26px; }
+
+    /* ===== 서브메뉴(탭): about와 동일 (높이/여백 완전 동일) ===== */
+    .subnav {
+      border-bottom:1px solid var(--line);
+      background:#fff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      opacity: 0;
+      transform: translateY(-14px);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+    .subnav.is-in{
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+      pointer-events: auto;
+      transition:
+        opacity .22s ease,
+        transform .34s cubic-bezier(.16,1,.3,1),
+        filter .26s ease;
+    }
+    .subnav.is-in::after{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      height:1px;
+      background: linear-gradient(90deg,
+        rgba(22,101,52,0),
+        rgba(22,101,52,.35),
+        rgba(22,101,52,0)
+      );
+      animation: flashLine .7s ease both;
+      pointer-events:none;
+    }
+    @keyframes flashLine{
+      from { opacity:0; transform: translateY(-6px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .subnav .nav-link{
+      color: var(--ink);
+      font-weight: 800;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all .18s ease;
+      position: relative;
+    }
+    .subnav .nav-link:hover{
+      background:#f0fdf4;
+      border-color:#dcfce7;
+      color:#14532d;
+    }
+    .subnav .nav-link.active{
+      background: var(--brand-soft);
+      border-color: var(--brand-soft-2);
+      color: var(--brand);
+      box-shadow: 0 10px 26px rgba(16,185,129,0.10);
+    }
+
+    /* ===== 탭 전환 애니메이션(about와 동일 결) ===== */
+    .tab-pane{
+      opacity: 0;
+      transform: translateY(10px);
+      filter: blur(4px);
+      transition:
+        opacity .20s ease,
+        transform .28s cubic-bezier(.16,1,.3,1),
+        filter .22s ease;
+    }
+    .tab-pane.is-active{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* 본문 레이아웃(about와 동일 여백) */
+    .content-wrap { padding: 28px 0 44px; }
+    .card-soft { border:1px solid var(--line); border-radius:18px; background:#fff; }
+    .section-title { font-weight:900; font-size: 1.35rem; margin-bottom: 14px; }
+
+    .pill{
+      background:var(--brand-soft);
+      border:1px solid var(--brand-soft-2);
+      color:var(--brand);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:800;
+      font-size:.85rem;
+    }
+
+    .btn-ghost{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:800;
+    }
+    .btn-ghost:hover{ background:#f9fafb; }
+
+    .list a{
+      display:flex; justify-content:space-between; gap:12px;
+      padding:14px 0;
+      text-decoration:none;
+      color:var(--ink);
+      border-bottom:1px solid var(--line);
+    }
+    .list a:last-child{ border-bottom:0; }
+    .list a:hover{ color:var(--brand); }
+
+    /* ===== 링크 아이콘 패널 (플래시 등장) ===== */
+    .link-panel{
+      position: fixed;
+      top: 72px;
+      right: 18px;
+      width: min(360px, 92vw);
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
+      padding: 14px;
+      z-index: 9998;
+      display:none;
+
+      opacity: 0;
+      transform: translateY(-10px);
+      filter: blur(6px);
+    }
+    .link-panel.open{
+      display:block;
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+      transition:
+        opacity .18s ease,
+        transform .28s cubic-bezier(.16,1,.3,1),
+        filter .22s ease;
+    }
+    .link-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 10px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--ink);
+      border:1px solid transparent;
+    }
+    .link-item:hover{
+      background: var(--brand-soft);
+      border-color: var(--brand-soft-2);
+      color: var(--brand);
+    }
+    .link-item small{ color:var(--muted); font-weight:700; }
+    .link-head{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom: 6px;
+    }
+    .xmini{
+      width:34px; height:34px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .xmini:hover{ background:#f9fafb; }
+  </style>
+</head>
+
+<body>
+  <!-- 상단 네비(about와 동일 구조 + 링크 아이콘 추가) -->
+  <nav class="navbar bg-white border-bottom">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand fw-bold m-0" href="../index.html">재단법인 서담(書潭)장학연구재단</a>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="top-actions d-none d-lg-flex">
+          <a class="top-link" href="../company/about.html">재단소개</a>
+          <a class="top-link" href="./index.html">알림마당</a>
+        </div>
+
+        <!-- ✅ 링크(체인) 아이콘 버튼 -->
+        <button id="linkBtn" class="iconbtn" type="button" aria-label="관련 링크 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.9 2.03"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 11a5 5 0 0 0-7.07 0L4.8 13.12a5 5 0 0 0 7.07 7.07L13.1 21.97"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <!-- 햄버거 -->
+        <button id="menuBtn" class="iconbtn" type="button" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 헤더(about와 동일 높이/여백: py-4) -->
+  <header class="page-hero py-4">
+    <div class="container">
+      <div class="hero-title h3 mb-1">알림마당</div>
+      <div class="muted">서브메뉴에서 항목을 선택하면 내용이 전환됩니다.</div>
+    </div>
+  </header>
+
+  <!-- ✅ 서브메뉴(탭): about와 동일 높이/여백 -->
+  <div id="subnav" class="subnav position-relative">
+    <div class="container">
+      <ul class="nav nav-pills gap-2 py-2 flex-wrap">
+        <li class="nav-item"><a class="nav-link active" href="#notice" data-tab="notice">공지사항</a></li>
+        <li class="nav-item"><a class="nav-link" href="#report" data-tab="report">회계감사보고서</a></li>
+        <li class="nav-item"><a class="nav-link" href="#donation" data-tab="donation">모금액 및 활용실적</a></li>
+        <li class="nav-item"><a class="nav-link" href="#library" data-tab="library">자료실</a></li>
+        <li class="nav-item"><a class="nav-link" href="#links" data-tab="links">관련정부기관</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 본문(about와 동일 여백) -->
+  <main class="container content-wrap">
+    <div class="row g-4">
+      <!-- 왼쪽 카드: 기존 "바로가기" 내용 유지 -->
+      <div class="col-lg-4">
+        <div class="card-soft p-4 h-100">
+          <div class="fw-bold mb-2">바로가기</div>
+          <div class="d-flex flex-column gap-2">
+            <!-- ✅ 기존 파일 유지(링크) -->
+            <a class="btn btn-ghost text-start" href="./notice.html">공지사항</a>
+            <a class="btn btn-ghost text-start" href="./report.html">회계감사보고서</a>
+            <a class="btn btn-ghost text-start" href="./donation.html">모금액 및 활용실적</a>
+            <a class="btn btn-ghost text-start" href="./library.html">자료실</a>
+            <a class="btn btn-ghost text-start" href="./links.html">관련정부기관</a>
+          </div>
+
+          <hr class="my-4">
+          <div class="muted small">
+            * 오른쪽 위 <b>🔗 아이콘</b>을 누르면 감독기관(서울시교육청/국세청) 링크가 바로 뜹니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽 카드: 기존 "최근 업데이트" 내용 유지 -->
+      <div class="col-lg-8">
+        <div class="card-soft p-4">
+          <!-- 탭: 공지사항 -->
+          <section id="tab-notice" class="tab-pane is-active">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="fw-bold">최근 업데이트</div>
+              <span class="pill">샘플</span>
+            </div>
+            <div class="list">
+              <a href="./notice.html"><span class="fw-bold">공지사항</span><span class="muted small">Notice</span></a>
+              <a href="./report.html"><span class="fw-bold">회계감사보고서</span><span class="muted small">Audit</span></a>
+              <a href="./donation.html"><span class="fw-bold">모금액 및 활용실적</span><span class="muted small">Donation</span></a>
+              <a href="./library.html"><span class="fw-bold">자료실</span><span class="muted small">Library</span></a>
+              <a href="./links.html"><span class="fw-bold">관련정부기관</span><span class="muted small">Links</span></a>
+            </div>
+            <div class="muted small mt-3">* 각 페이지(공지/보고서/자료실)는 다음 단계에서 순서대로 만들어드릴게요.</div>
+          </section>
+
+          <!-- 탭들(현재 페이지 내 전환용, 내용은 간단 표시) -->
+          <section id="tab-report" class="tab-pane d-none">
+            <div class="section-title">회계감사보고서</div>
+            <p class="muted mb-0">현재는 목록/파일을 정리해 넣는 영역입니다. (상세 페이지 연결은 그대로 유지)</p>
+          </section>
+
+          <section id="tab-donation" class="tab-pane d-none">
+            <div class="section-title">모금액 및 활용실적</div>
+            <p class="muted mb-0">현재는 목록/자료를 정리해 넣는 영역입니다. (상세 페이지 연결은 그대로 유지)</p>
+          </section>
+
+          <section id="tab-library" class="tab-pane d-none">
+            <div class="section-title">자료실</div>
+            <p class="muted mb-0">양식/자료 다운로드 링크를 정리해 넣는 영역입니다. (상세 페이지 연결은 그대로 유지)</p>
+          </section>
+
+          <section id="tab-links" class="tab-pane d-none">
+            <div class="section-title">관련정부기관</div>
+            <ul class="mb-0">
+              <li><a href="https://www.sen.go.kr" target="_blank" rel="noreferrer">서울시교육청</a></li>
+              <li><a href="https://www.nts.go.kr" target="_blank" rel="noreferrer">국세청</a></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ 링크(체인) 아이콘 패널 -->
+  <div id="linkPanel" class="link-panel" aria-hidden="true">
+    <div class="link-head">
+      <div class="fw-bold">관련정부기관</div>
+      <button id="linkClose" class="xmini" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <a class="link-item" href="https://www.sen.go.kr" target="_blank" rel="noreferrer">
+      <div>
+        <div class="fw-bold">서울시교육청</div>
+        <small>감독기관</small>
+      </div>
+      <div class="muted">↗</div>
+    </a>
+    <a class="link-item" href="https://www.nts.go.kr" target="_blank" rel="noreferrer">
+      <div>
+        <div class="fw-bold">국세청</div>
+        <small>감독기관</small>
+      </div>
+      <div class="muted">↗</div>
+    </a>
+  </div>
+
+  <!-- 전체 메뉴 오버레이(기존 유지) -->
+  <div id="menuOverlay" class="menu-overlay" aria-hidden="true" style="display:none;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ====== 서브메뉴 플래시 등장 ======
+    const subnav = document.getElementById("subnav");
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => subnav.classList.add("is-in"), 90);
+    });
+
+    // ====== 탭 전환 ======
+    const tabs = ["notice", "report", "donation", "library", "links"];
+    const tabLinks = document.querySelectorAll("[data-tab]");
+
+    function showPane(tab){
+      const pane = document.getElementById("tab-" + tab);
+      if(!pane) return;
+
+      tabs.forEach(t => {
+        const el = document.getElementById("tab-" + t);
+        if(!el) return;
+        if(t !== tab){
+          el.classList.remove("is-active");
+          setTimeout(() => el.classList.add("d-none"), 160);
+        }
+      });
+
+      pane.classList.remove("d-none");
+      requestAnimationFrame(() => pane.classList.add("is-active"));
+
+      tabLinks.forEach(a => a.classList.toggle("active", a.dataset.tab === tab));
+    }
+
+    tabLinks.forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const tab = a.dataset.tab;
+        history.replaceState(null, "", "#" + tab);
+        showPane(tab);
+      });
+    });
+
+    const init = (location.hash || "#notice").replace("#", "");
+    showPane(tabs.includes(init) ? init : "notice");
+
+    // ====== 링크(체인) 아이콘 패널 ======
+    const linkBtn = document.getElementById("linkBtn");
+    const linkPanel = document.getElementById("linkPanel");
+    const linkClose = document.getElementById("linkClose");
+
+    function openLinks(){
+      linkPanel.classList.add("open");
+      linkPanel.setAttribute("aria-hidden","false");
+    }
+    function closeLinks(){
+      linkPanel.classList.remove("open");
+      linkPanel.setAttribute("aria-hidden","true");
+      // display:none은 애니메이션 끝난 후
+      setTimeout(()=>{ if(!linkPanel.classList.contains("open")) linkPanel.style.display="none"; }, 220);
+    }
+
+    linkBtn.addEventListener("click", () => {
+      if(linkPanel.classList.contains("open")){
+        closeLinks();
+      } else {
+        linkPanel.style.display = "block";
+        requestAnimationFrame(openLinks);
+      }
+    });
+    linkClose.addEventListener("click", closeLinks);
+
+    window.addEventListener("click", (e) => {
+      if(!linkPanel.classList.contains("open")) return;
+      if(e.target.closest("#linkPanel")) return;
+      if(e.target.closest("#linkBtn")) return;
+      closeLinks();
+    });
+
+    // ====== 햄버거 오버레이: 기존 파일 방식 유지(간단 버전) ======
+    const menuBtn = document.getElementById("menuBtn");
+    menuBtn.addEventListener("click", () => {
+      alert("햄버거 전체메뉴(오버레이)는 기존 about/index에 있던 코드 그대로 붙여넣으면 동작합니다.\n(원하면 내가 이 파일에 완전 포함시켜서 다시 한 번에 정리해줄게요.)");
+    });
+  </script>
+</body>
+</html>
