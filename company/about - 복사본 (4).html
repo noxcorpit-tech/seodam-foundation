@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ✅ JS에서 탭에 따라 자동 변경됨 -->
+  <title>재단소개 | 재단법인 서담(書潭)장학연구재단</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+
+      --brand:#166534;
+      --brand-soft:#ecfdf5;
+      --brand-soft-2:#d1fae5;
+
+      --navy:#0b3a67;
+      --bg:#f8fafc;
+
+      --shadow-1: 0 10px 26px rgba(15, 23, 42, .06);
+      --shadow-2: 0 18px 50px rgba(15, 23, 42, .10);
+      --shadow-3: 0 24px 70px rgba(11, 58, 103, .18);
+
+      /* ✅ 왼쪽 그림(배경) 파일 경로: 여기만 바꾸면 됨 */
+      /* 예: ../images/flower1.png  또는  ../images/flower2.png */
+      --left-art-image: url("../images/intro0.jpg");
+    }
+
+    html{ scrollbar-gutter: stable; }
+    @supports not (scrollbar-gutter: stable) { body{ overflow-y: scroll; } }
+
+    body{
+      font-family:"Noto Sans KR",sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+    .muted{ color:var(--muted); }
+
+    /* 상단 */
+    .navbar{ min-height:72px; padding-top:0; padding-bottom:0; }
+    .logo-img{ height:34px; width:auto; display:block; }
+    .page-hero{ background:var(--bg); border-bottom:1px solid var(--line); }
+    .hero-title{ font-weight:900; letter-spacing:-.02em; }
+
+    .top-actions{ display:flex; align-items:center; gap:6px; }
+    .top-actions .top-link{
+      display:inline-flex; align-items:center;
+      padding:10px 10px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--ink);
+      font-weight:900;
+    }
+    .top-actions .top-link:hover{ background:#f3f4f6; }
+
+    .iconbtn{
+      width:64px; height:64px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:var(--navy); color:#fff;
+      border:0; border-radius:0;
+    }
+    .iconbtn:hover{ opacity:.95; }
+    .iconbtn svg{ width:26px; height:26px; }
+
+    /* 서브메뉴 */
+    .subnav{
+      border-bottom:1px solid var(--line);
+      background:#fff;
+      position:sticky;
+      top:0;
+      z-index:10;
+
+      opacity:0;
+      transform: translateY(-14px);
+      filter: blur(6px);
+      pointer-events:none;
+    }
+    .subnav.is-in{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+      pointer-events:auto;
+      transition: opacity .22s ease, transform .34s cubic-bezier(.16,1,.3,1), filter .26s ease;
+    }
+    .subnav .nav-link{
+      color:var(--ink);
+      font-weight:900;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition:all .18s ease;
+    }
+    .subnav .nav-link:hover{
+      background:#f0fdf4;
+      border-color:#dcfce7;
+      color:#14532d;
+    }
+    .subnav .nav-link.active{
+      background:var(--brand-soft);
+      border-color:var(--brand-soft-2);
+      color:var(--brand);
+      box-shadow: 0 10px 26px rgba(16,185,129,0.10);
+    }
+
+    /* 레이아웃 */
+    .content-wrap{ padding:28px 0 44px; }
+    .card-soft{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden; /* ✅ 칸 밖 튀는거 원천봉쇄 */
+    }
+
+    /* =========================================================
+       ✅ 왼쪽 카드 “그림(배경) + 오버레이” 추가
+       ========================================================= */
+    .left-card{
+      position:relative;
+      min-height: 560px;
+      background: #ffffff;
+    }
+    .left-art{
+      position:absolute;
+      inset:0;
+      background-image: var(--left-art-image);
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.03);
+      filter: saturate(1.05);
+      opacity:.90;
+    }
+    /* 은은한 흰빛/브랜드 톤 오버레이 */
+    .left-art-ov{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 360px at 20% 20%, rgba(11,58,103,.14), transparent 55%),
+        radial-gradient(900px 360px at 75% 10%, rgba(22,101,52,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.92));
+    }
+    /* 왼쪽 카드 내부 콘텐츠는 위로 */
+    .left-inner{
+      position:relative;
+      z-index:1;
+    }
+
+    /* 왼쪽 워터마크 */
+    .left-watermark{
+      font-weight:900;
+      color:rgba(229,231,235,.95);
+      letter-spacing:.06em;
+      font-size:44px;
+      line-height:1.05;
+      user-select:none;
+      text-shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+
+    .ceo-photo{
+      margin:22px auto 0;
+      width:220px;
+      display:none;
+    }
+    .ceo-photo img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:10px;
+      object-fit:cover;
+      box-shadow:0 6px 18px rgba(0,0,0,.15);
+    }
+
+    /* 오른쪽 본문 통일(칸 안 예쁘게) */
+    .content-card *{ box-sizing:border-box; max-width:100%; }
+    .section-title{ font-weight:900; font-size:1.35rem; margin-bottom:14px; }
+
+    .content-card p{
+      margin:0 0 14px;
+      line-height:1.75;
+      word-break:keep-all;
+      overflow-wrap:break-word;
+    }
+    .content-card p:last-child{ margin-bottom:0; }
+    .content-card b{ font-weight:900; }
+    .content-card ol, .content-card ul{
+      margin:8px 0 14px;
+      padding-left:1.15rem;
+      line-height:1.75;
+    }
+    .content-card li{ margin:6px 0; }
+
+    /* 탭 애니메이션 */
+    .tab-pane{
+      opacity:0;
+      transform: translateY(10px);
+      filter: blur(4px);
+      transition: opacity .20s ease, transform .28s cubic-bezier(.16,1,.3,1), filter .22s ease;
+    }
+    .tab-pane.is-active{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* ✅ 찾아오시는 길: 링크형 지도 */
+    .map-link-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .map-link{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      text-decoration:none;
+      height:520px;
+      background:#f3f4f6;
+      color:#111827;
+      font-weight:900;
+      font-size:1.1rem;
+      gap:10px;
+    }
+    .map-link:hover{ background:#eef2f7; }
+    .map-link .hint{
+      color:var(--muted);
+      font-weight:700;
+      font-size:.95rem;
+    }
+    @media (max-width:768px){
+      .map-link{ height:360px; }
+    }
+    .addr-one{
+      margin-top:14px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+    }
+    .addr-one .title{ font-weight:900; margin-bottom:4px; }
+    .addr-one .addr{ margin:0; color:var(--muted); line-height:1.6; }
+
+    /* ✅ location 탭일 때: 좌측 숨기고 전체폭으로 */
+    .layout-location #leftCol{ display:none !important; }
+    .layout-location #rightCol{ flex:0 0 100%; max-width:100%; }
+
+    /* ✅ 이사회 탭에서만: 좌/우 카드 제거 + 전체폭 조직도 */
+    .layout-board #leftCol{ display:none !important; }
+    .layout-board #rightCol{ flex:0 0 100%; max-width:100%; }
+
+    .layout-board #rightCol .card-soft{
+      border:0;
+      background:transparent;
+      padding:0 !important;
+      border-radius:0;
+      overflow:visible;
+    }
+    .layout-board #rightCol .content-card{
+      padding:0 !important;
+    }
+
+    /* ===== 이사회: 프리미엄 조직도 카드 ===== */
+    .board-stage{
+      position:relative;
+      border-radius:22px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-2);
+      overflow:hidden;
+    }
+    .board-stage::before{
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:140px;
+      background:
+        radial-gradient(1200px 240px at 18% 20%, rgba(11,58,103,.18), transparent 55%),
+        radial-gradient(1000px 240px at 78% 0%, rgba(22,101,52,.10), transparent 55%),
+        linear-gradient(180deg, rgba(248,250,252,1), rgba(255,255,255,1));
+      pointer-events:none;
+    }
+    .board-stage-inner{
+      position:relative;
+      padding: 22px;
+    }
+    .board-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      padding: 6px 6px 16px;
+    }
+    .board-header .title{
+      font-weight:900;
+      font-size:1.4rem;
+      margin:0;
+      letter-spacing:-.02em;
+    }
+    .board-header .sub{
+      margin-top:6px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.55;
+    }
+    .board-badges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .b-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:999px;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      font-weight:900;
+      font-size:.92rem;
+      box-shadow: var(--shadow-1);
+    }
+    .b-pill svg{ width:18px; height:18px; }
+
+    .orgwrap{ padding: 10px 6px 16px; }
+
+    .node{
+      border:1px solid rgba(229,231,235,.95);
+      background:#fff;
+      border-radius:18px;
+      box-shadow: var(--shadow-1);
+      padding:14px 16px;
+      text-align:left;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .node:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15,23,42,.10);
+    }
+    .node .role{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:900;
+      font-size:.92rem;
+      color:var(--muted);
+    }
+    .node .role .dot{
+      width:8px;height:8px;border-radius:999px;background:var(--line);
+    }
+    .node .name{
+      font-weight:900;
+      font-size:1.15rem;
+      margin-top:6px;
+      letter-spacing:-.01em;
+    }
+    .node .meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.6;
+      white-space:pre-line;
+    }
+
+    .node.chair{
+      border:0;
+      border-radius:22px;
+      padding:20px 20px;
+      background: linear-gradient(135deg, #06325c, #0b3a67 55%, #0f4f86);
+      box-shadow: var(--shadow-3);
+      color:#fff;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .node.chair::after{
+      content:"";
+      position:absolute;
+      inset:-40px -120px auto auto;
+      width:220px; height:220px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.20), transparent 60%);
+      transform: rotate(18deg);
+    }
+    .node.chair .role{
+      color: rgba(255,255,255,.90);
+      justify-content:center;
+    }
+    .node.chair .role .dot{ background: rgba(255,255,255,.45); }
+    .node.chair .name{
+      font-size:1.75rem;
+      margin-top:8px;
+      letter-spacing:-.03em;
+    }
+    .node.chair .meta{
+      color: rgba(255,255,255,.92);
+      font-weight:700;
+    }
+
+    .org-top{
+      display:flex;
+      justify-content:center;
+      padding: 6px 0 0;
+    }
+    .org-top .node.chair{ width:min(720px, 100%); }
+
+    .line-v{
+      position:relative;
+      height:34px;
+    }
+    .line-v::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      width:2px;
+      height:34px;
+      background: rgba(229,231,235,1);
+      transform: translateX(-50%);
+    }
+
+    .org-mid{
+      position:relative;
+      padding-top: 18px;
+    }
+    .org-mid::before{
+      content:"";
+      position:absolute;
+      left:7%;
+      right:7%;
+      top:0;
+      height:2px;
+      background: rgba(229,231,235,1);
+    }
+    .dir-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .dir-item{
+      position:relative;
+      padding-top: 22px;
+    }
+    .dir-item::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      width:2px;
+      height:22px;
+      background: rgba(229,231,235,1);
+      transform: translateX(-50%);
+    }
+
+    .org-bot{
+      position:relative;
+      margin-top: 14px;
+      padding-top: 18px;
+    }
+    .org-bot::before{
+      content:"";
+      position:absolute;
+      left:22%;
+      right:22%;
+      top:0;
+      height:2px;
+      background: rgba(229,231,235,1);
+    }
+    .audit-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:14px;
+      max-width: 880px;
+      margin:0 auto;
+    }
+    .audit-item{
+      position:relative;
+      padding-top:22px;
+    }
+    .audit-item::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      width:2px;
+      height:22px;
+      background: rgba(229,231,235,1);
+      transform: translateX(-50%);
+    }
+
+    .node.director .role .dot{ background: rgba(11,58,103,.35); }
+    .node.auditor  .role .dot{ background: rgba(22,101,52,.35); }
+
+    @media (max-width: 1200px){
+      .dir-grid{ grid-template-columns: repeat(2, 1fr); }
+      .org-mid::before{ left:10%; right:10%; }
+    }
+    @media (max-width: 576px){
+      .board-stage-inner{ padding: 18px; }
+      .dir-grid{ grid-template-columns: 1fr; }
+      .audit-grid{ grid-template-columns: 1fr; }
+      .org-mid::before{ left:18%; right:18%; }
+      .org-bot::before{ left:18%; right:18%; }
+    }
+
+    /* “재단소개 첫 화면(요약)” 탭 디자인 */
+    .intro-hero{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow: var(--shadow-1);
+      margin-bottom:14px;
+    }
+    .intro-hero .bg{
+      position:absolute;
+      inset:0;
+      background: url("../images/main0.png") center/cover no-repeat;
+      transform: scale(1.03);
+      filter: saturate(1.05);
+    }
+    .intro-hero .ov{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 260px at 18% 20%, rgba(11,58,103,.22), transparent 58%),
+        radial-gradient(900px 260px at 78% 0%, rgba(22,101,52,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.94));
+    }
+    .intro-hero .in{
+      position:relative;
+      padding:22px;
+    }
+    .intro-kicker{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(229,231,235,.9);
+      font-weight:900;
+      color:#0b3a67;
+      box-shadow: var(--shadow-1);
+    }
+    .intro-kicker .dot{ width:8px; height:8px; border-radius:999px; background:#0b3a67; opacity:.5; }
+    .intro-title{
+      margin:14px 0 8px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      font-size:1.55rem;
+      line-height:1.25;
+    }
+    .intro-desc{
+      margin:0;
+      color:rgba(31,41,55,.78);
+      font-weight:700;
+      line-height:1.7;
+      max-width: 840px;
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    @media (max-width: 992px){
+      .intro-grid{ grid-template-columns: 1fr; }
+    }
+    .intro-card{
+      border:1px solid rgba(229,231,235,.95);
+      border-radius:16px;
+      background:#fff;
+      padding:14px 14px;
+      box-shadow: var(--shadow-1);
+      text-decoration:none;
+      color:inherit;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      display:block;
+    }
+    .intro-card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15,23,42,.10);
+      border-color: rgba(209,250,229,.9);
+    }
+    .intro-card .h{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .intro-card .label{
+      font-weight:900;
+      color:#111827;
+      letter-spacing:-.01em;
+    }
+    .intro-card .tag{
+      font-weight:900;
+      font-size:.86rem;
+      color:#166534;
+      background: var(--brand-soft);
+      border:1px solid var(--brand-soft-2);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .intro-card .p{
+      margin:0;
+      color:rgba(31,41,55,.75);
+      font-weight:700;
+      line-height:1.65;
+    }
+
+    .intro-mini{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:900;
+      box-shadow: var(--shadow-1);
+      color:#111827;
+    }
+    .mini-pill small{
+      font-weight:800;
+      color:var(--muted);
+    }
+
+    /* 오른쪽 아이콘(🔗/☰) */
+    .link-panel{
+      position: fixed;
+      top: 72px;
+      right: 18px;
+      width: min(360px, 92vw);
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
+      padding:14px;
+      z-index: 9998;
+      display:none;
+
+      opacity:0;
+      transform: translateY(-10px);
+      filter: blur(6px);
+    }
+    .link-panel.open{
+      display:block;
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+      transition: opacity .18s ease, transform .28s cubic-bezier(.16,1,.3,1), filter .22s ease;
+    }
+    .link-item{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:12px 10px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--ink);
+      border:1px solid transparent;
+    }
+    .link-item:hover{
+      background:var(--brand-soft);
+      border-color:var(--brand-soft-2);
+      color:var(--brand);
+    }
+    .link-item small{ color:var(--muted); font-weight:700; }
+    .link-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .xmini{
+      width:34px; height:34px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .xmini:hover{ background:#f9fafb; }
+
+    .menu-overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(17,24,39,.55);
+      backdrop-filter: blur(2px);
+      z-index: 9997;
+      display:none;
+      opacity:0;
+      transition: opacity .18s ease;
+    }
+    .menu-overlay.open{ display:block; opacity:1; }
+
+    .menu-drawer{
+      position:fixed;
+      top:0; right:0;
+      width:min(420px, 92vw);
+      height:100vh;
+      background:#fff;
+      border-left:1px solid var(--line);
+      z-index:9999;
+      transform: translateX(14px);
+      opacity:0;
+      filter: blur(6px);
+      pointer-events:none;
+      transition: transform .28s cubic-bezier(.16,1,.3,1), opacity .18s ease, filter .22s ease;
+    }
+    .menu-drawer.open{
+      transform: translateX(0);
+      opacity:1;
+      filter: blur(0);
+      pointer-events:auto;
+    }
+    .menu-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 16px;
+      border-bottom:1px solid var(--line);
+    }
+    .menu-body{ padding:14px 16px; }
+    .menu-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      text-decoration:none;
+      color:var(--ink);
+      font-weight:900;
+      padding:14px 12px;
+      border-radius:14px;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+    .menu-item:hover{
+      background:var(--brand-soft);
+      border-color:var(--brand-soft-2);
+      color:var(--brand);
+    }
+    .menu-group-title{
+      font-weight:900;
+      margin: 14px 0 8px;
+      color:#111827;
+    }
+    .menu-sub{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:8px;
+    }
+    .menu-sub a{
+      padding:10px 12px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--ink);
+      font-weight:800;
+      border:1px solid transparent;
+    }
+    .menu-sub a:hover{
+      background:var(--brand-soft);
+      border-color:var(--brand-soft-2);
+      color:var(--brand);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 상단 네비 -->
+  <nav class="navbar bg-white border-bottom">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand m-0" href="../index.html">
+        <img src="../images/main.png" alt="서담장학연구재단" class="logo-img">
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="top-actions d-none d-lg-flex">
+          <a class="top-link" href="./about.html">재단소개</a>
+          <a class="top-link" href="../notice/index.html">알림마당</a>
+        </div>
+
+        <!-- 🔗 / ☰ 버튼 -->
+        <button id="linkBtn" class="iconbtn" type="button" aria-label="관련 링크 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.9 2.03"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 11a5 5 0 0 0-7.07 0L4.8 13.12a5 5 0 0 0 7.07 7.07L13.1 21.97"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button id="menuBtn" class="iconbtn" type="button" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ✅ 헤더(탭마다 제목 바뀌도록 id 부여) -->
+  <header class="page-hero py-4">
+    <div class="container">
+      <div id="pageTitle" class="hero-title h3 mb-1">재단소개</div>
+      <div id="pageDesc" class="muted">서브메뉴에서 항목을 선택하면 내용이 전환됩니다.</div>
+    </div>
+  </header>
+
+  <!-- 서브메뉴 -->
+  <div id="subnav" class="subnav">
+    <div class="container">
+      <ul class="nav nav-pills gap-2 py-2 flex-wrap">
+        <li class="nav-item"><a class="nav-link active" href="#intro" data-tab="intro">재단소개</a></li>
+        <li class="nav-item"><a class="nav-link" href="#message" data-tab="message">이사장 인사말</a></li>
+        <li class="nav-item"><a class="nav-link" href="#purpose" data-tab="purpose">설립취지</a></li>
+        <li class="nav-item"><a class="nav-link" href="#scholarship" data-tab="scholarship">장학사업소개</a></li>
+        <li class="nav-item"><a class="nav-link" href="#history" data-tab="history">연혁</a></li>
+        <li class="nav-item"><a class="nav-link" href="#board" data-tab="board">이사회</a></li>
+        <li class="nav-item"><a class="nav-link" href="#location" data-tab="location">찾아오시는 길</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main class="container content-wrap">
+    <div id="mainRow" class="row g-4">
+
+      <!-- 왼쪽 -->
+      <div id="leftCol" class="col-lg-4">
+        <!-- ✅ left-card 구조로 변경(배경 그림 포함) -->
+        <div class="card-soft p-4 h-100 left-card">
+          <div class="left-art" aria-hidden="true"></div>
+          <div class="left-art-ov" aria-hidden="true"></div>
+
+          <div class="left-inner">
+            <div id="leftMark" class="left-watermark">FOUNDATION<br/>INTRO</div>
+            <hr class="my-4">
+
+            <div id="ceoPhoto" class="ceo-photo">
+              <img id="ceoPhotoImg" src="" alt="탭 대표 사진">
+            </div>
+
+            <div class="muted small mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽 -->
+      <div id="rightCol" class="col-lg-8">
+        <div class="card-soft p-4 content-card">
+
+          <!-- 0) 재단소개(요약) -->
+          <section id="tab-intro" class="tab-pane is-active">
+            <div class="section-title">재단소개</div>
+
+            <div class="intro-hero">
+              <div class="bg"></div>
+              <div class="ov"></div>
+              <div class="in">
+                <div class="intro-kicker"><span class="dot"></span>Seodam Scholarship & Research Foundation</div>
+                <div class="intro-title">장학과 연구 지원으로<br>미래 인재 성장을 돕는 공익 재단</div>
+                <p class="intro-desc">
+                  서담장학연구재단은 공학·기술 인재의 학문적 성장과 산업 현장에 필요한 실무형 인재 양성을 지원하며,
+                  의학·공학 분야 연구 활동이 지속될 수 있도록 후원합니다.
+                </p>
+
+                <div class="intro-grid">
+                  <a class="intro-card" href="#purpose" data-jump="purpose">
+                    <div class="h">
+                      <div class="label">설립취지</div>
+                      <div class="tag">Purpose</div>
+                    </div>
+                    <p class="p">재단이 왜 만들어졌는지, 어떤 방향으로 운영되는지 핵심을 먼저 확인하세요.</p>
+                  </a>
+
+                  <a class="intro-card" href="#scholarship" data-jump="scholarship">
+                    <div class="h">
+                      <div class="label">장학사업</div>
+                      <div class="tag">Program</div>
+                    </div>
+                    <p class="p">장학생 선발·지원, 설명 및 절차 등 재단의 주요 사업을 한눈에 볼 수 있습니다.</p>
+                  </a>
+
+                  <a class="intro-card" href="#message" data-jump="message">
+                    <div class="h">
+                      <div class="label">이사장 인사말</div>
+                      <div class="tag">Message</div>
+                    </div>
+                    <p class="p">재단 운영 철학과 비전을 담은 인사말을 확인하실 수 있습니다.</p>
+                  </a>
+                </div>
+
+                <div class="intro-mini" aria-label="빠른 이동">
+                  <a class="mini-pill text-decoration-none" href="#board" data-jump="board">이사회 <small>구성 보기</small></a>
+                  <a class="mini-pill text-decoration-none" href="#location" data-jump="location">오시는 길 <small>지도 열기</small></a>
+                </div>
+              </div>
+            </div>
+
+            <p class="muted mb-0">
+              * 상단 서브메뉴에서 항목을 선택하면 내용이 전환됩니다.
+            </p>
+          </section>
+
+          <!-- 1) 이사장 인사말 -->
+          <section id="tab-message" class="tab-pane d-none">
+            <div class="section-title">이사장 인사말</div>
+
+            <p class="mb-2"><b>미래를 이끄는 인재와 연구를 함께 키우겠습니다</b></p>
+
+            <p>서담장학연구재단 홈페이지를 찾아주신 여러분을 진심으로 환영합니다.</p>
+
+            <p class="muted">
+              급변하는 사회와 산업 환경 속에서, 미래 경쟁력의 핵심은 우수한 공학 인재와 현장에 강한 기술 인력,
+              그리고 이를 뒷받침하는 지속적인 연구에 있습니다. 서담장학연구재단은 이러한 시대적 흐름에 발맞추어,
+              인재와 연구자가 안정적인 환경에서 역량을 펼칠 수 있도록 지원하고자 설립되었습니다.
+            </p>
+
+            <p>
+              본 재단은 우수한 공학 인재의 학문적 성장과 전문성 함양을 돕고, 산업 현장에서 요구되는 실무형 기술 인력
+              양성을 지원하며, 의학·공학 분야 연구단체에 대한 후원을 통해 학문 발전과 기술 혁신에 기여하고자 합니다.
+            </p>
+
+            <p>
+              이를 위해 장학금과 연구비 지원을 통해 학생과 연구자들이 경제적 부담 없이 학업과 연구에 전념할 수 있는
+              환경을 조성하고, 그 성과가 사회와 산업 전반으로 확산될 수 있도록 힘쓰겠습니다.
+            </p>
+
+            <p>
+              서담장학연구재단은 앞으로도 공정하고 투명한 운영을 바탕으로, 인재와 연구가 존중 받는 사회를 만들어가는
+              든든한 동반자가 되겠습니다. 여러분의 지속적인 관심과 응원을 부탁드립니다.
+            </p>
+
+            <p class="mb-2">감사합니다.</p>
+
+            <p class="mb-0">
+              서담장학연구재단 이사장<br>
+              <b>고윤재</b>
+            </p>
+          </section>
+
+          <!-- 2) 설립취지 -->
+          <section id="tab-purpose" class="tab-pane d-none">
+            <div class="section-title">설립취지</div>
+
+            <p>
+              서담장학연구재단은 국가와 산업의 미래를 이끌어갈 인재를 키우고,
+              의미 있는 연구가 지속될 수 있도록 돕기 위해 설립되었습니다.
+            </p>
+
+            <p class="muted">
+              빠르게 변화하는 기술 환경 속에서 의료와 공학 분야는 사회 발전의 중요한 기반이 되고 있습니다.
+              서담장학연구재단은 이러한 변화의 흐름 속에서 사람과 기술이 함께 성장할 수 있는 토대를 마련하고자,
+              다음과 같은 방향을 중심으로 활동하고 있습니다.
+            </p>
+
+            <p>
+              <b>우수한 공학 인재 양성</b><br>
+              창의적인 사고와 전문성을 갖춘 공학 인재를 발굴하여,
+              학업과 연구에 집중할 수 있는 환경을 지원합니다.
+              이를 통해 미래 산업을 이끌어갈 건강한 인재 성장을 돕고자 합니다.
+            </p>
+
+            <p>
+              <b>산업 현장에 필요한 기술 인력 양성</b><br>
+              현장에서 바로 활용할 수 있는 실무 역량을 갖춘 기술 인력을 육성하여,
+              산업과 사회에 실질적으로 기여할 수 있도록 지원합니다.
+            </p>
+
+            <p>
+              <b>의학·공학 연구 활동 지원</b><br>
+              의학과 공학 분야의 연구자 및 연구단체를 지원하여,
+              연구가 꾸준히 이어지고 그 성과가 사회 전반으로 확산될 수 있도록 힘쓰고 있습니다.
+            </p>
+
+            <p class="mb-0">
+              앞으로도 서담장학연구재단은 사람과 기술, 연구와 현장을 잇는
+              든든한 동반자로서 역할을 이어가겠습니다.
+            </p>
+          </section>
+
+          <!-- 3) 장학사업소개 -->
+          <section id="tab-scholarship" class="tab-pane d-none">
+            <div class="section-title">장학사업소개</div>
+
+            <p>
+              <b>1. 목적</b><br>
+              서담장학연구재단은 우수한 공학 및 기술 인재를 양성하고,
+              국내 산업현장에서 즉시 활용 가능한 기술 인력을 육성하며,
+              의학·공학 분야 연구 활성화를 지원하기 위해 설립되었습니다.
+            </p>
+
+            <p>
+              <b>2. 주요 사업</b><br>
+              서담장학연구재단은 다음과 같은 사업을 수행합니다.
+            </p>
+
+            <p>
+              <b>A. 공학 우수 장학사업</b><br>
+              공학(특히 화학공업) 분야 학부생 및 대학원생을 대상으로,
+              학업 성취도, 연구 활동, 산업 연계 프로젝트 수행능력 등을
+              종합적으로 평가하여 장학생을 선발·지원합니다.
+            </p>
+
+            <p>
+              <b>B. 기술 인재 육성 지원</b><br>
+              산업체 인턴십, 현장 실습 프로그램 및 멘토링 지원을 통해
+              학생들이 실무 경험을 쌓을 수 있는 기회를 제공합니다.<br>
+              또한 산업현장에 필요한 인력을 양성하기 위해
+              실업계 고등학생 중 우수자를 선발하여 장학금을 지원합니다.
+            </p>
+
+            <p>
+              <b>C. 연구 지원 사업</b><br>
+              의학·공학 연구단체 및 개인 연구자에게 연구비를 지원하여
+              기초 및 응용 연구 수행을 돕습니다.<br>
+              아울러 학술 세미나, 워크숍, 국제 협력 연구 활동 참여에
+              필요한 비용의 일부를 지원합니다.
+            </p>
+
+            <p><b>3. 선발 절차</b></p>
+            <ol>
+              <li><b>서류 접수</b><br>지원서, 자기소개서, 성적증명서, 추천서 제출</li>
+              <li><b>심사위원회 평가</b><br>학업 성취도, 연구계획의 적합성, 산업 연계 가능성 등을 종합 평가</li>
+              <li><b>최종 선발 및 발표</b><br>재단 홈페이지 공지 및 개별 통보</li>
+              <li><b>장학금 수여식 및 사후관리</b><br>장학증서 수여 및 연간 활동 보고 제출</li>
+            </ol>
+          </section>
+
+          <!-- 4) 연혁 -->
+          <section id="tab-history" class="tab-pane d-none">
+            <div class="section-title">연혁</div>
+            <p class="muted mb-0">* 연혁 내용은 실제 항목으로 교체하시면 됩니다.</p>
+          </section>
+
+          <!-- 5) 이사회 -->
+          <section id="tab-board" class="tab-pane d-none">
+            <div class="board-stage">
+              <div class="board-stage-inner">
+
+                <div class="board-header">
+                  <div>
+                    <h2 class="title">이사회 구성</h2>
+                    <div class="sub">재단의 공정하고 투명한 운영을 위해 이사회 및 감사가 운영됩니다.</div>
+                  </div>
+
+                  <div class="board-badges" aria-label="구성 인원 요약">
+                    <span class="b-pill" title="이사장 1명">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      이사장 1
+                    </span>
+                    <span class="b-pill" title="이사 4명">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M6.5 12a2.5 2.5 0 1 0-2.5-2.5A2.5 2.5 0 0 0 6.5 12Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 20a5 5 0 0 0-10 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M11 20a4.5 4.5 0 0 0-9 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      이사 4
+                    </span>
+                    <span class="b-pill" title="감사 2명">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2 19 5v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V5l7-3Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      감사 2
+                    </span>
+                  </div>
+                </div>
+
+                <div class="orgwrap">
+                  <div class="org-top">
+                    <div class="node chair">
+                      <div class="role"><span class="dot"></span>이사장</div>
+                      <div class="name">고윤재</div>
+                      <div class="meta">- (현) ㈜녹수 명예회장
+- ㈜ 신호인더스트리 회장</div>
+                    </div>
+                  </div>
+
+                  <div class="line-v" aria-hidden="true"></div>
+
+                  <div class="org-mid">
+                    <div class="dir-grid">
+                      <div class="dir-item">
+                        <div class="node director">
+                          <div class="role"><span class="dot"></span>이사</div>
+                          <div class="name">최호순</div>
+                          <div class="meta">- (현) 병원장
+- (전) 한양대의과대학장</div>
+                        </div>
+                      </div>
+
+                      <div class="dir-item">
+                        <div class="node director">
+                          <div class="role"><span class="dot"></span>이사</div>
+                          <div class="name">오성근</div>
+                          <div class="meta">- (현) 대학교수
+- (전) 한양대경영부총장</div>
+                        </div>
+                      </div>
+
+                      <div class="dir-item">
+                        <div class="node director">
+                          <div class="role"><span class="dot"></span>이사</div>
+                          <div class="name">강동원</div>
+                          <div class="meta">- (현) 변호사
+- (전) 검사</div>
+                        </div>
+                      </div>
+
+                      <div class="dir-item">
+                        <div class="node director">
+                          <div class="role"><span class="dot"></span>이사</div>
+                          <div class="name">신천수</div>
+                          <div class="meta">- (현) 법무사</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="org-bot">
+                    <div class="audit-grid">
+                      <div class="audit-item">
+                        <div class="node auditor">
+                          <div class="role"><span class="dot"></span>감사</div>
+                          <div class="name">박정태</div>
+                          <div class="meta">- (현) 삼덕회계법인 공인회계사</div>
+                        </div>
+                      </div>
+
+                      <div class="audit-item">
+                        <div class="node auditor">
+                          <div class="role"><span class="dot"></span>감사</div>
+                          <div class="name">박세영</div>
+                          <div class="meta">- (현) 이촌회계법인 공인회계사</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- 6) 찾아오시는 길 -->
+          <section id="tab-location" class="tab-pane d-none">
+            <div class="section-title">찾아오시는 길</div>
+
+            <div class="map-link-card">
+              <a class="map-link"
+                 href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%ED%9A%A8%EB%A0%B9%EB%A1%9C%20355%20KD%20CENTER"
+                 target="_blank" rel="noreferrer">
+                네이버 지도에서 보기
+                <div class="hint">클릭하면 지도(새 창)가 열립니다</div>
+              </a>
+            </div>
+
+            <div class="addr-one">
+              <div class="title">주소</div>
+              <p class="addr">서울시 서초구 효령로 355, KD CENTER (우)06643</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 🔗 링크 패널 -->
+  <div id="linkPanel" class="link-panel" aria-hidden="true">
+    <div class="link-head">
+      <div class="fw-bold">관련정부기관</div>
+      <button id="linkClose" class="xmini" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <a class="link-item" href="https://www.sen.go.kr" target="_blank" rel="noreferrer">
+      <div>
+        <div class="fw-bold">서울시교육청</div>
+        <small>감독기관</small>
+      </div>
+      <div class="muted">↗</div>
+    </a>
+
+    <a class="link-item" href="https://www.nts.go.kr" target="_blank" rel="noreferrer">
+      <div>
+        <div class="fw-bold">국세청</div>
+        <small>감독기관</small>
+      </div>
+      <div class="muted">↗</div>
+    </a>
+  </div>
+
+  <!-- ☰ 메뉴 오버레이 + 드로어 -->
+  <div id="menuOverlay" class="menu-overlay" aria-hidden="true"></div>
+
+  <aside id="menuDrawer" class="menu-drawer" aria-hidden="true">
+    <div class="menu-head">
+      <div class="fw-bold">전체메뉴</div>
+      <button id="menuClose" class="xmini" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="menu-body">
+      <div class="menu-group-title">메인</div>
+      <a class="menu-item" href="../index.html">홈 <span class="muted">↗</span></a>
+
+      <div class="menu-group-title">재단</div>
+      <a class="menu-item" href="./about.html">재단소개(이 페이지) <span class="muted">↗</span></a>
+
+      <div class="menu-group-title">재단소개 서브메뉴</div>
+      <div class="menu-sub">
+        <a href="#intro" data-drawer-tab="intro">재단소개</a>
+        <a href="#message" data-drawer-tab="message">이사장 인사말</a>
+        <a href="#purpose" data-drawer-tab="purpose">설립취지</a>
+        <a href="#scholarship" data-drawer-tab="scholarship">장학사업소개</a>
+        <a href="#history" data-drawer-tab="history">연혁</a>
+        <a href="#board" data-drawer-tab="board">이사회</a>
+        <a href="#location" data-drawer-tab="location">찾아오시는 길</a>
+      </div>
+
+      <div class="menu-group-title">알림마당</div>
+      <a class="menu-item" href="../notice/index.html">공지사항 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../report/index.html">회계감사보고서 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../donation/index.html">모금액 및 활용실적 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../library/index.html">자료실 <span class="muted">↗</span></a>
+      <a class="menu-item" href="../links/index.html">관련정부기관 <span class="muted">↗</span></a>
+    </div>
+  </aside>
+
+  <script>
+    // 서브메뉴 등장
+    const subnav = document.getElementById("subnav");
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => subnav.classList.add("is-in"), 60);
+    });
+
+    // ✅ 상단 제목/설명
+    const pageTitle = document.getElementById("pageTitle");
+    const pageDesc  = document.getElementById("pageDesc");
+    const baseSiteTitle = "재단법인 서담(書潭)장학연구재단";
+
+    // ✅ 탭 목록
+    const tabs = ["intro","message","purpose","scholarship","history","board","location"];
+    const tabLinks = document.querySelectorAll("[data-tab]");
+    const leftMark = document.getElementById("leftMark");
+
+    const ceoPhotoWrap = document.getElementById("ceoPhoto");
+    const ceoPhotoImg  = document.getElementById("ceoPhotoImg");
+    const mainRow = document.getElementById("mainRow");
+
+    // 사진은 "이사장 인사말"에서만
+    const tabPhotoMap = {
+      intro: "",
+      message: "../images/boss.png",
+      purpose: "",
+      scholarship: "",
+      history: "",
+      board: "",
+      location: ""
+    };
+
+    // ✅ 탭별 표시용 한글 제목 (상단/브라우저 타이틀 변경)
+    const tabKoreanTitle = {
+      intro: "재단소개",
+      message: "이사장 인사말",
+      purpose: "설립취지",
+      scholarship: "장학사업소개",
+      history: "연혁",
+      board: "이사회",
+      location: "찾아오시는 길"
+    };
+
+    function watermarkFor(tab){
+      const map = {
+        intro: "FOUNDATION\nINTRO",
+        message: "CEO\nMESSAGE",
+        purpose: "FOUNDATION\nPURPOSE",
+        scholarship: "SCHOLARSHIP\nPROGRAM",
+        history: "FOUNDATION\nHISTORY",
+        board: "BOARD\nOF\nDIRECTORS",
+        location: "LOCATION\n&\nMAP"
+      };
+      return (map[tab] || "FOUNDATION");
+    }
+
+    function applyLeftPhoto(tab){
+      const src = tabPhotoMap[tab] || "";
+      if(src){
+        ceoPhotoImg.src = src;
+        ceoPhotoWrap.style.display = "block";
+      }else{
+        ceoPhotoImg.removeAttribute("src");
+        ceoPhotoWrap.style.display = "none";
+      }
+    }
+
+    function applyLayout(tab){
+      if(tab === "location"){
+        mainRow.classList.add("layout-location");
+      }else{
+        mainRow.classList.remove("layout-location");
+      }
+
+      if(tab === "board"){
+        mainRow.classList.add("layout-board");
+      }else{
+        mainRow.classList.remove("layout-board");
+      }
+    }
+
+    // ✅ 상단 제목/브라우저 타이틀 업데이트
+    function applyTopTitle(tab){
+      const kTitle = tabKoreanTitle[tab] || "재단소개";
+      pageTitle.textContent = kTitle;
+
+      // 설명은 공통 유지(원하면 탭별로 다르게도 가능)
+      pageDesc.textContent = "서브메뉴에서 항목을 선택하면 내용이 전환됩니다.";
+
+      // 브라우저 탭 title도 변경
+      document.title = `${kTitle} | ${baseSiteTitle}`;
+    }
+
+    function showPane(tab){
+      const pane = document.getElementById("tab-" + tab);
+      if(!pane) return;
+
+      tabs.forEach(t => {
+        const el = document.getElementById("tab-" + t);
+        if(!el) return;
+        if(t !== tab){
+          el.classList.remove("is-active");
+          setTimeout(() => el.classList.add("d-none"), 160);
+        }
+      });
+
+      pane.classList.remove("d-none");
+      requestAnimationFrame(() => pane.classList.add("is-active"));
+
+      tabLinks.forEach(a => a.classList.toggle("active", a.dataset.tab === tab));
+
+      leftMark.innerHTML = watermarkFor(tab).replaceAll("\n","<br/>");
+
+      applyLayout(tab);
+      applyLeftPhoto(tab);
+      applyTopTitle(tab);
+
+      history.replaceState(null, "", "#" + tab);
+    }
+
+    tabLinks.forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPane(a.dataset.tab);
+      });
+    });
+
+    // 요약 카드(빠른 이동) 클릭 시 탭 이동
+    document.querySelectorAll("[data-jump]").forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const t = a.getAttribute("data-jump");
+        if(t && tabs.includes(t)) showPane(t);
+      });
+    });
+
+    // ✅ 초기 탭: 해시 없으면 intro가 기본
+    const init = (location.hash || "#intro").replace("#", "");
+    showPane(tabs.includes(init) ? init : "intro");
+
+    /* 🔗 / ☰ 동작 */
+    const linkBtn = document.getElementById("linkBtn");
+    const linkPanel = document.getElementById("linkPanel");
+    const linkClose = document.getElementById("linkClose");
+
+    function openLinks(){
+      linkPanel.style.display = "block";
+      requestAnimationFrame(() => linkPanel.classList.add("open"));
+      linkPanel.setAttribute("aria-hidden","false");
+    }
+    function closeLinks(){
+      linkPanel.classList.remove("open");
+      linkPanel.setAttribute("aria-hidden","true");
+      setTimeout(()=>{ if(!linkPanel.classList.contains("open")) linkPanel.style.display="none"; }, 220);
+    }
+
+    linkBtn?.addEventListener("click", () => {
+      if(linkPanel.classList.contains("open")) closeLinks();
+      else openLinks();
+    });
+    linkClose?.addEventListener("click", closeLinks);
+
+    window.addEventListener("click", (e) => {
+      if(!linkPanel.classList.contains("open")) return;
+      if(e.target.closest("#linkPanel")) return;
+      if(e.target.closest("#linkBtn")) return;
+      closeLinks();
+    });
+
+    const menuBtn = document.getElementById("menuBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const menuDrawer = document.getElementById("menuDrawer");
+    const menuClose = document.getElementById("menuClose");
+
+    function openMenu(){
+      menuOverlay.classList.add("open");
+      menuDrawer.classList.add("open");
+      menuOverlay.setAttribute("aria-hidden","false");
+      menuDrawer.setAttribute("aria-hidden","false");
+      if(linkPanel.classList.contains("open")) closeLinks();
+      document.body.style.overflow = "hidden";
+    }
+    function closeMenu(){
+      menuOverlay.classList.remove("open");
+      menuDrawer.classList.remove("open");
+      menuOverlay.setAttribute("aria-hidden","true");
+      menuDrawer.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    menuBtn?.addEventListener("click", openMenu);
+    menuOverlay?.addEventListener("click", closeMenu);
+    menuClose?.addEventListener("click", closeMenu);
+
+    document.querySelectorAll("[data-drawer-tab]").forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const t = a.getAttribute("data-drawer-tab");
+        if(t && tabs.includes(t)) showPane(t);
+        closeMenu();
+      });
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        if(menuDrawer.classList.contains("open")) closeMenu();
+        if(linkPanel.classList.contains("open")) closeLinks();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -45,12 +45,28 @@
     .menu-item{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--ink);font-weight:900;padding:14px 12px;border-radius:14px;border:1px solid transparent;}
     .menu-item:hover{background:var(--brand-soft);border-color:var(--brand-soft-2);color:var(--brand);}
     .menu-group-title{font-weight:900;margin:14px 0 8px;color:#111827;}
+/* 네비 높이 고정 */
+.navbar {
+  min-height: 72px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* 로고 크기 조정 */
+.logo-img {
+  height: 34px;      /* ← 핵심: 이 값으로 크기 조절 */
+  width: auto;
+  display: block;
+}
   </style>
 </head>
 <body>
   <nav class="navbar bg-white border-bottom">
     <div class="container d-flex align-items-center justify-content-between">
-      <a class="navbar-brand fw-bold m-0" href="../index.html">재단법인 서담(書潭)장학연구재단</a>
+<a class="navbar-brand m-0" href="../index.html">
+  <img src="../images/main.png" alt="서담장학연구재단" class="logo-img">
+</a>
+
       <div class="d-flex align-items-center gap-2">
         <div class="top-actions d-none d-lg-flex">
           <a class="top-link" href="../company/about.html">재단소개</a>
